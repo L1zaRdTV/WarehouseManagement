@@ -34,21 +34,45 @@ namespace WarehouseManagement.Pages
                 return;
             }
 
-            var locations = AppConnect.model01.StockBalances
-                .Include(x => x.StorageLocations.StorageZones.Warehouses)
-                .Where(x => x.ProductID == product.ProductID && x.Quantity > 0)
+            var balancesByLocation = AppConnect.model01.StockBalances
+                .Where(x => x.ProductID == product.ProductID)
                 .ToList()
-                .Select(x => new LocationChoice
+                .GroupBy(x => x.LocationID)
+                .ToDictionary(x => x.Key, x => x.Sum(b => b.Quantity));
+
+            var locations = AppConnect.model01.StorageLocations
+                .Include(x => x.StorageZones.Warehouses)
+                .OrderBy(x => x.StorageZones.Warehouses.WarehouseName)
+                .ThenBy(x => x.StorageZones.ZoneName)
+                .ThenBy(x => x.LocationCode)
+                .ToList()
+                .Select(x =>
                 {
-                    Location = x.StorageLocations,
-                    Quantity = x.Quantity,
-                    DisplayName = x.StorageLocations.LocationCode + " — остаток " + x.Quantity
+                    var quantity = balancesByLocation.ContainsKey(x.LocationID) ? balancesByLocation[x.LocationID] : 0;
+                    return new LocationChoice
+                    {
+                        Location = x,
+                        Quantity = quantity,
+                        DisplayName = BuildLocationDisplayName(x, quantity)
+                    };
                 })
                 .ToList();
 
             cmbLocation.ItemsSource = locations;
             if (locations.Count > 0) cmbLocation.SelectedIndex = 0;
             txtPrice.Text = product.SalePrice.ToString(CultureInfo.CurrentCulture);
+        }
+
+        private static string BuildLocationDisplayName(StorageLocations location, int quantity)
+        {
+            var warehouseName = location.StorageZones == null || location.StorageZones.Warehouses == null
+                ? "Склад не указан"
+                : location.StorageZones.Warehouses.WarehouseName;
+            var zoneName = location.StorageZones == null
+                ? "зона не указана"
+                : location.StorageZones.ZoneName;
+
+            return warehouseName + " / " + zoneName + " / " + location.LocationCode + " — остаток " + quantity;
         }
 
         private void LoadShipments()
@@ -126,7 +150,7 @@ namespace WarehouseManagement.Pages
 
             if (client == null || product == null || choice == null || employee == null)
             {
-                tbStatus.Text = "Заполните клиента, товар и место хранения с положительным остатком.";
+                tbStatus.Text = "Заполните клиента, товар и место хранения.";
                 return;
             }
 
