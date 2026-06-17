@@ -77,18 +77,21 @@
                     <Border Style="{StaticResource CardBorderStyle}">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="112"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="150"/>
                             </Grid.ColumnDefinitions>
 
-                            <StackPanel Grid.Column="0">
+                            <Image Grid.Column="0" Source="{Binding ImagePath}" Width="96" Height="96" Stretch="UniformToFill" Margin="0,0,12,0"/>
+
+                            <StackPanel Grid.Column="1">
                                 <TextBlock Text="{Binding ProductName}" FontSize="18" FontWeight="Bold" TextWrapping="Wrap"/>
                                 <TextBlock Text="{Binding Price, StringFormat=Учетная цена: {0} ₽}" Margin="0,8,0,0" FontWeight="SemiBold"/>
                                 <TextBlock Text="{Binding QuantityInStock, StringFormat=Остаток: {0}}" Margin="0,5,0,0"/>
                                 <TextBlock Text="{Binding Description}" Margin="0,8,0,0" TextWrapping="Wrap" MaxHeight="72" TextTrimming="CharacterEllipsis"/>
                             </StackPanel>
 
-                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                            <StackPanel Grid.Column="2" VerticalAlignment="Center">
                                 <Button Content="Списать через отгрузку" Tag="{Binding SourceProduct}" Margin="0,0,0,8" Click="btnAddToCart_Click" Style="{StaticResource PrimaryButtonStyle}"/>
                                 <Button Content="Подробнее" Tag="{Binding SourceProduct}" Click="btnDetails_Click"/>
                             </StackPanel>

@@ -26,7 +26,7 @@ namespace WarehouseManagement.ApplicationData
             db.Categories.Add(category); db.Units.Add(unit); db.Suppliers.Add(supplier); db.Clients.Add(client); db.Warehouses.Add(warehouse); db.StorageZones.Add(zone); db.StorageLocations.Add(location);
             warehouse.StorageZones.Add(zone); zone.StorageLocations.Add(location);
 
-            var drill = new Products { ProductID = 1, Sku = "DRL-500", ProductName = "Дрель ударная 500 Вт", Description = "Бытовая ударная дрель", PurchasePrice = 2600, SalePrice = 3490, CategoryID = category.CategoryID, UnitID = unit.UnitID, SupplierID = supplier.SupplierID, MinStock = 5, IsActive = true, Categories = category, Units = unit, Suppliers = supplier };
+            var drill = new Products { ProductID = 1, Sku = "DRL-500", ProductName = "Дрель ударная 500 Вт", Description = "Бытовая ударная дрель", PurchasePrice = 2600, SalePrice = 3490, CategoryID = category.CategoryID, UnitID = unit.UnitID, SupplierID = supplier.SupplierID, MinStock = 5, IsActive = true, ImagePath = "https://commons.wikimedia.org/wiki/Special:FilePath/Hammer%20drill-1.jpg?width=800", Categories = category, Units = unit, Suppliers = supplier };
             db.Products.Add(drill); category.Products.Add(drill); unit.Products.Add(drill); supplier.Products.Add(drill);
             var balance = new StockBalances { BalanceID = 1, ProductID = drill.ProductID, LocationID = location.LocationID, Quantity = 12, UpdatedAt = DateTime.Now, Products = drill, StorageLocations = location };
             db.StockBalances.Add(balance); drill.StockBalances.Add(balance); location.StockBalances.Add(balance);

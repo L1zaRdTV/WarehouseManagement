@@ -31,16 +31,18 @@
                     <Border Style="{StaticResource CardBorderStyle}">
                         <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="92"/>
                                 <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="180"/>
                                 <ColumnDefinition Width="140"/>
                                 <ColumnDefinition Width="160"/>
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Grid.Column="0" Text="{Binding ProductName}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
-                            <TextBlock Grid.Column="1" Text="{Binding Categories.CategoryName}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                            <TextBlock Grid.Column="2" Text="{Binding Price, StringFormat={}{0} ₽}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="SemiBold"/>
-                            <TextBlock Grid.Column="3" Text="{Binding QuantityInStock, StringFormat=Остаток: {0}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <Image Grid.Column="0" Source="{Binding DisplayImagePath}" Width="76" Height="76" Stretch="UniformToFill" Margin="0,0,12,0"/>
+                            <TextBlock Grid.Column="1" Text="{Binding ProductName}" FontSize="18" FontWeight="Bold" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                            <TextBlock Grid.Column="2" Text="{Binding Categories.CategoryName}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            <TextBlock Grid.Column="3" Text="{Binding Price, StringFormat={}{0} ₽}" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="SemiBold"/>
+                            <TextBlock Grid.Column="4" Text="{Binding QuantityInStock, StringFormat=Остаток: {0}}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </Grid>
                     </Border>
                 </DataTemplate>
