@@ -17,6 +17,23 @@
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Padding="10">
             <Border Style="{StaticResource CardBorderStyle}" Width="560" HorizontalAlignment="Center" Padding="20">
                 <StackPanel>
+                    <TextBlock Text="Фотография товара" FontWeight="SemiBold"/>
+                    <Border BorderBrush="#D0D7E2" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,4,0,10">
+                        <StackPanel>
+                            <Image x:Name="imgProduct" Height="180" Stretch="Uniform" Margin="0,0,0,8"/>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="110"/>
+                                    <ColumnDefinition Width="110"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBox x:Name="txtImagePath" Grid.Column="0" Margin="0,0,8,0" MaxLength="1000" TextChanged="txtImagePath_TextChanged"/>
+                                <Button x:Name="btnChooseImage" Grid.Column="1" Content="Выбрать" Margin="0,0,8,0" Click="btnChooseImage_Click"/>
+                                <Button x:Name="btnClearImage" Grid.Column="2" Content="Заглушка" Click="btnClearImage_Click"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
                     <TextBlock Text="Название товара" FontWeight="SemiBold"/>
                     <TextBox x:Name="txtName" MaxLength="200"/>
 
@@ -24,43 +41,16 @@
                     <TextBox x:Name="txtDescription" Height="90" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="200"/>
 
                     <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-
-                        <StackPanel Grid.Column="0" Margin="0,0,8,0">
-                            <TextBlock Text="Цена" FontWeight="SemiBold"/>
-                            <TextBox x:Name="txtPrice" MaxLength="200"/>
-                        </StackPanel>
-
-                        <StackPanel Grid.Column="1" Margin="8,0,0,0">
-                            <TextBlock Text="Количество" FontWeight="SemiBold"/>
-                            <TextBox x:Name="txtQuantity" MaxLength="200"/>
-                        </StackPanel>
+                        <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Margin="0,0,8,0"><TextBlock Text="Цена" FontWeight="SemiBold"/><TextBox x:Name="txtPrice" MaxLength="200"/></StackPanel>
+                        <StackPanel Grid.Column="1" Margin="8,0,0,0"><TextBlock Text="Количество" FontWeight="SemiBold"/><TextBox x:Name="txtQuantity" MaxLength="200"/></StackPanel>
                     </Grid>
 
                     <TextBlock Text="Категория" FontWeight="SemiBold"/>
-                    <Grid Margin="0,4,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-
-                        <ComboBox x:Name="cmbCategory" Grid.Column="0" Margin="0,0,10,0"/>
-                        <Button x:Name="btnAddCategory" Grid.Column="1" Content="+ Категория" Click="btnAddCategory_Click"/>
-                    </Grid>
+                    <Grid Margin="0,4,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbCategory" Grid.Column="0" Margin="0,0,10,0"/><Button x:Name="btnAddCategory" Grid.Column="1" Content="+ Категория" Click="btnAddCategory_Click"/></Grid>
 
                     <TextBlock Text="Поставщик" FontWeight="SemiBold"/>
-                    <Grid Margin="0,4,0,10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="120"/>
-                        </Grid.ColumnDefinitions>
-
-                        <ComboBox x:Name="cmbBrand" Grid.Column="0" Margin="0,0,10,0"/>
-                        <Button x:Name="btnAddBrand" Grid.Column="1" Content="+ Поставщик" Click="btnAddBrand_Click"/>
-                    </Grid>
+                    <Grid Margin="0,4,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbBrand" Grid.Column="0" Margin="0,0,10,0"/><Button x:Name="btnAddBrand" Grid.Column="1" Content="+ Поставщик" Click="btnAddBrand_Click"/></Grid>
 
                     <TextBlock Text="Единица измерения" FontWeight="SemiBold"/>
                     <ComboBox x:Name="cmbStatus" Margin="0,4,0,10"/>
