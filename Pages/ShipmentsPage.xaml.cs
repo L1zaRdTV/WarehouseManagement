@@ -139,7 +139,26 @@ namespace WarehouseManagement.Pages
         private void cmbProduct_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             LoadLocations();
+            if (IsLoaded) { int quantity; decimal price; ValidateForm(out quantity, out price); }
         }
+
+        private bool ValidateForm(out int quantity, out decimal price)
+        {
+            var ok = true;
+            string error;
+            quantity = 0;
+            price = 0;
+            ok &= InputValidationHelper.ValidateCombo(cmbClient, errClient, "Клиент");
+            ok &= InputValidationHelper.ValidateCombo(cmbProduct, errProduct, "Товар");
+            ok &= InputValidationHelper.ValidateCombo(cmbLocation, errLocation, "Место хранения");
+            ok &= InputValidationHelper.TryParseQuantity(txtQuantity.Text, out quantity, out error); InputValidationHelper.Mark(txtQuantity, errQuantity, error);
+            ok &= InputValidationHelper.TryParsePrice(txtPrice.Text, out price, out error); InputValidationHelper.Mark(txtPrice, errPrice, error);
+            error = txtComment.Text.Length > 300 ? "Комментарий слишком длинный: максимум 300 символов." : null; InputValidationHelper.Mark(txtComment, errComment, error); ok &= error == null;
+            return ok;
+        }
+
+        private void ValidateShipmentField(object sender, TextChangedEventArgs e) { if (!IsLoaded) return; int quantity; decimal price; ValidateForm(out quantity, out price); }
+        private void ValidateShipmentSelection(object sender, SelectionChangedEventArgs e) { if (!IsLoaded) return; int quantity; decimal price; ValidateForm(out quantity, out price); }
 
         private void btnCreateShipment_Click(object sender, RoutedEventArgs e)
         {
@@ -147,22 +166,12 @@ namespace WarehouseManagement.Pages
             var product = cmbProduct.SelectedItem as Products;
             var choice = cmbLocation.SelectedItem as LocationChoice;
             var employee = GetCurrentEmployee();
+            int quantity;
+            decimal price;
 
-            if (client == null || product == null || choice == null || employee == null)
+            if (!ValidateForm(out quantity, out price) || employee == null)
             {
-                tbStatus.Text = "Заполните клиента, товар и место хранения.";
-                return;
-            }
-
-            if (!int.TryParse(txtQuantity.Text.Trim(), out var quantity) || quantity <= 0)
-            {
-                tbStatus.Text = "Количество должно быть целым числом больше нуля.";
-                return;
-            }
-
-            if (!decimal.TryParse(txtPrice.Text.Trim(), out var price) || price < 0)
-            {
-                tbStatus.Text = "Цена должна быть числом не меньше нуля.";
+                tbStatus.Text = "Исправьте подсвеченные поля новой отгрузки.";
                 return;
             }
 

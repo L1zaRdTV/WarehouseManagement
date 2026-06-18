@@ -3,23 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <Color x:Key="XpBlue">#245EDB</Color>
-        <Color x:Key="XpBlueDark">#0C3AA9</Color>
-        <Color x:Key="XpBlueLight">#5C9DFF</Color>
+        <Color x:Key="XpBlue">#1B3F8B</Color>
+        <Color x:Key="XpBlueDark">#102A5F</Color>
+        <Color x:Key="XpBlueLight">#86A9D8</Color>
         <Color x:Key="XpOlive">#6B8E23</Color>
-        <Color x:Key="XpFace">#ECE9D8</Color>
+        <Color x:Key="XpFace">#D8D2B6</Color>
         <Color x:Key="XpWindow">#FFFFFF</Color>
         <Color x:Key="XpText">#111111</Color>
         <Color x:Key="XpMuted">#4B4B4B</Color>
-        <Color x:Key="XpBorderDark">#7F9DB9</Color>
+        <Color x:Key="XpBorderDark">#7A8A79</Color>
         <Color x:Key="XpShadow">#808080</Color>
         <Color x:Key="XpHighlight">#316AC5</Color>
 
-        <SolidColorBrush x:Key="PageBackgroundBrush" Color="#3A6EA5"/>
+        <SolidColorBrush x:Key="PageBackgroundBrush" Color="#1F3F3A"/>
         <SolidColorBrush x:Key="PanelBackgroundBrush" Color="{StaticResource XpFace}"/>
         <SolidColorBrush x:Key="BorderBrushSoft" Color="{StaticResource XpBorderDark}"/>
         <SolidColorBrush x:Key="AccentTextBrush" Color="{StaticResource XpText}"/>
-        <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#F4F2E8"/>
+        <SolidColorBrush x:Key="PrimaryButtonBrush" Color="#E9E3C9"/>
+        <SolidColorBrush x:Key="RetroErrorBrush" Color="#B03028"/>
+        <SolidColorBrush x:Key="RetroSuccessBrush" Color="#41743E"/>
         <SolidColorBrush x:Key="ClassicTitleBrush" Color="{StaticResource XpBlue}"/>
         <SolidColorBrush x:Key="ClassicTitleBorderBrush" Color="{StaticResource XpBlueDark}"/>
         <SolidColorBrush x:Key="ClassicTitleTextBrush" Color="#FFFFFF"/>
@@ -79,27 +81,57 @@
             <Setter Property="Foreground" Value="#000000"/>
         </Style>
         <Style TargetType="TextBox">
-            <Setter Property="Height" Value="32"/><Setter Property="Margin" Value="0,4,0,10"/><Setter Property="Padding" Value="8,5"/>
-            <Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/>
-            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/><Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Margin" Value="0,4,0,3"/>
+            <Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/>
+            <Setter Property="Foreground" Value="#111111"/>
+            <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CaretBrush" Value="{StaticResource ClassicTitleBrush}"/>
+            <Style.Triggers>
+                <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                    <Setter Property="Background" Value="#FFFBE7"/>
+                    <Setter Property="BorderBrush" Value="#1B3F8B"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
         <Style TargetType="PasswordBox">
-            <Setter Property="Height" Value="32"/><Setter Property="Margin" Value="0,4,0,10"/><Setter Property="Padding" Value="8,5"/>
+            <Setter Property="Height" Value="32"/><Setter Property="Margin" Value="0,4,0,3"/><Setter Property="Padding" Value="8,5"/>
             <Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/>
             <Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/><Setter Property="BorderThickness" Value="1"/>
+            <Style.Triggers><Trigger Property="IsKeyboardFocusWithin" Value="True"><Setter Property="Background" Value="#FFFBE7"/><Setter Property="BorderBrush" Value="#1B3F8B"/></Trigger></Style.Triggers>
         </Style>
-        <Style TargetType="ComboBox"><Setter Property="Height" Value="32"/><Setter Property="Margin" Value="0,4,0,10"/><Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/></Style>
+        <Style TargetType="ComboBox"><Setter Property="Height" Value="32"/><Setter Property="Margin" Value="0,4,0,3"/><Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/></Style>
         <Style TargetType="ListView"><Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/></Style>
         <Style TargetType="ListBox"><Setter Property="Background" Value="{StaticResource ClassicWindowBrush}"/><Setter Property="Foreground" Value="#111111"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/></Style>
         <Style x:Key="CardBorderStyle" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource PanelBackgroundBrush}"/><Setter Property="BorderBrush" Value="{StaticResource BorderBrushSoft}"/>
-            <Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="0"/><Setter Property="Padding" Value="14"/><Setter Property="Margin" Value="4"/>
+            <Setter Property="BorderThickness" Value="1"/><Setter Property="CornerRadius" Value="3"/><Setter Property="Padding" Value="14"/><Setter Property="Margin" Value="4"/>
+            <Setter Property="Opacity" Value="0.96"/>
+            <Style.Triggers>
+                <EventTrigger RoutedEvent="Loaded">
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0.82" To="0.96" Duration="0:0:0.35"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger>
+            </Style.Triggers>
         </Style>
         <Style x:Key="PageHeaderTextStyle" TargetType="TextBlock">
             <Setter Property="FontSize" Value="24"/><Setter Property="FontWeight" Value="Bold"/><Setter Property="Foreground" Value="{StaticResource ClassicTitleTextBrush}"/><Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
         <Style x:Key="WindowHeaderBorderStyle" TargetType="Border">
             <Setter Property="Background" Value="{StaticResource ClassicTitleBrush}"/><Setter Property="BorderBrush" Value="{StaticResource ClassicTitleBorderBrush}"/><Setter Property="BorderThickness" Value="0,0,0,2"/><Setter Property="Padding" Value="18,10"/>
+        </Style>
+        <Style x:Key="FieldErrorTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource RetroErrorBrush}"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,0,0,8"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="Visibility" Value="Collapsed"/>
         </Style>
     </Application.Resources>
 </Application>
