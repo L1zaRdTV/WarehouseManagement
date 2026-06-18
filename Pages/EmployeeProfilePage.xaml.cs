@@ -44,18 +44,37 @@ namespace WarehouseManagement.Pages
             AppFrame.frmMain.GoBack();
         }
 
+        private bool ValidateForm()
+        {
+            var ok = true;
+            string error;
+            error = InputValidationHelper.ValidateFullName(txtFullName.Text); InputValidationHelper.Mark(txtFullName, errFullName, error); ok &= error == null;
+            error = InputValidationHelper.ValidateEmail(txtEmail.Text); InputValidationHelper.Mark(txtEmail, errEmail, error); ok &= error == null;
+            error = InputValidationHelper.ValidatePhone(txtPhone.Text); InputValidationHelper.Mark(txtPhone, errPhone, error); ok &= error == null;
+            return ok;
+        }
+
+        private void ValidateProfileField(object sender, TextChangedEventArgs e) { if (IsLoaded && isEditing) ValidateForm(); }
+
         private void btnEditProfile_Click(object sender, RoutedEventArgs e)
         {
             if (!isEditing)
             {
                 SetEditMode(true);
+                ValidateForm();
+                return;
+            }
+
+            if (!ValidateForm())
+            {
+                MessageBox.Show("Исправьте подсвеченные поля профиля.");
                 return;
             }
 
             var user = AppConnect.CurrentUser;
             user.FullName = txtFullName.Text.Trim();
             user.Email = txtEmail.Text.Trim();
-            user.Phone = txtPhone.Text.Trim();
+            user.Phone = InputValidationHelper.NormalizePhone(txtPhone.Text);
             AppConnect.model01.SaveChanges();
             WarehouseService.Log("Изменение", "Users", user.UserID, "Пользователь обновил данные профиля");
             LoadProfile();

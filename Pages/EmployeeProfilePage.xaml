@@ -30,11 +30,14 @@
 
                     <StackPanel x:Name="spEditInfo" Visibility="Collapsed">
                         <TextBlock Text="ФИО" FontWeight="SemiBold"/>
-                        <TextBox x:Name="txtFullName" MaxLength="200"/>
+                        <TextBox x:Name="txtFullName" MaxLength="200" TextChanged="ValidateProfileField"/>
+                        <TextBlock x:Name="errFullName" Style="{StaticResource FieldErrorTextStyle}"/>
                         <TextBlock Text="Email" FontWeight="SemiBold"/>
-                        <TextBox x:Name="txtEmail" MaxLength="200"/>
+                        <TextBox x:Name="txtEmail" MaxLength="200" TextChanged="ValidateProfileField"/>
+                        <TextBlock x:Name="errEmail" Style="{StaticResource FieldErrorTextStyle}"/>
                         <TextBlock Text="Телефон" FontWeight="SemiBold"/>
-                        <TextBox x:Name="txtPhone" MaxLength="200"/>
+                        <TextBox x:Name="txtPhone" MaxLength="200" TextChanged="ValidateProfileField"/>
+                        <TextBlock x:Name="errPhone" Style="{StaticResource FieldErrorTextStyle}"/>
                     </StackPanel>
 
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,18,0,0">

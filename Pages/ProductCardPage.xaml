@@ -35,25 +35,30 @@
                     </Border>
 
                     <TextBlock Text="Название товара" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtName" MaxLength="200"/>
+                    <TextBox x:Name="txtName" MaxLength="200" TextChanged="ValidateProductField"/>
+                    <TextBlock x:Name="errName" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <TextBlock Text="Описание" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtDescription" Height="90" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="200"/>
+                    <TextBox x:Name="txtDescription" Height="90" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="200" TextChanged="ValidateProductField"/>
+                    <TextBlock x:Name="errDescription" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <Grid>
                         <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0" Margin="0,0,8,0"><TextBlock Text="Цена" FontWeight="SemiBold"/><TextBox x:Name="txtPrice" MaxLength="200"/></StackPanel>
-                        <StackPanel Grid.Column="1" Margin="8,0,0,0"><TextBlock Text="Количество" FontWeight="SemiBold"/><TextBox x:Name="txtQuantity" MaxLength="200"/></StackPanel>
+                        <StackPanel Grid.Column="0" Margin="0,0,8,0"><TextBlock Text="Цена" FontWeight="SemiBold"/><TextBox x:Name="txtPrice" MaxLength="200" TextChanged="ValidateProductField"/><TextBlock x:Name="errPrice" Style="{StaticResource FieldErrorTextStyle}"/></StackPanel>
+                        <StackPanel Grid.Column="1" Margin="8,0,0,0"><TextBlock Text="Количество" FontWeight="SemiBold"/><TextBox x:Name="txtQuantity" MaxLength="200" TextChanged="ValidateProductField"/><TextBlock x:Name="errQuantity" Style="{StaticResource FieldErrorTextStyle}"/></StackPanel>
                     </Grid>
 
                     <TextBlock Text="Категория" FontWeight="SemiBold"/>
-                    <Grid Margin="0,4,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbCategory" Grid.Column="0" Margin="0,0,10,0"/><Button x:Name="btnAddCategory" Grid.Column="1" Content="+ Категория" Click="btnAddCategory_Click"/></Grid>
+                    <Grid Margin="0,4,0,3"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbCategory" Grid.Column="0" Margin="0,0,10,0" SelectionChanged="ValidateProductSelection"/><Button x:Name="btnAddCategory" Grid.Column="1" Content="+ Категория" Click="btnAddCategory_Click"/></Grid>
+                    <TextBlock x:Name="errCategory" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <TextBlock Text="Поставщик" FontWeight="SemiBold"/>
-                    <Grid Margin="0,4,0,10"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbBrand" Grid.Column="0" Margin="0,0,10,0"/><Button x:Name="btnAddBrand" Grid.Column="1" Content="+ Поставщик" Click="btnAddBrand_Click"/></Grid>
+                    <Grid Margin="0,4,0,3"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="120"/></Grid.ColumnDefinitions><ComboBox x:Name="cmbBrand" Grid.Column="0" Margin="0,0,10,0" SelectionChanged="ValidateProductSelection"/><Button x:Name="btnAddBrand" Grid.Column="1" Content="+ Поставщик" Click="btnAddBrand_Click"/></Grid>
+                    <TextBlock x:Name="errBrand" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <TextBlock Text="Единица измерения" FontWeight="SemiBold"/>
-                    <ComboBox x:Name="cmbStatus" Margin="0,4,0,10"/>
+                    <ComboBox x:Name="cmbStatus" Margin="0,4,0,3" SelectionChanged="ValidateProductSelection"/>
+                    <TextBlock x:Name="errStatus" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <Button x:Name="btnSave" Content="Сохранить" Click="btnSave_Click" Style="{StaticResource PrimaryButtonStyle}"/>
                 </StackPanel>

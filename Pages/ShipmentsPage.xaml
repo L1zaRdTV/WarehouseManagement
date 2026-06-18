@@ -24,11 +24,14 @@
                 <StackPanel>
                     <TextBlock Text="Новая отгрузка" FontSize="22" FontWeight="Bold" Margin="0,0,0,12"/>
                     <TextBlock Text="Клиент" FontWeight="SemiBold"/>
-                    <ComboBox x:Name="cmbClient" DisplayMemberPath="ClientName"/>
+                    <ComboBox x:Name="cmbClient" DisplayMemberPath="ClientName" SelectionChanged="ValidateShipmentSelection"/>
+                    <TextBlock x:Name="errClient" Style="{StaticResource FieldErrorTextStyle}"/>
                     <TextBlock Text="Товар" FontWeight="SemiBold"/>
                     <ComboBox x:Name="cmbProduct" DisplayMemberPath="ProductName" SelectionChanged="cmbProduct_SelectionChanged"/>
+                    <TextBlock x:Name="errProduct" Style="{StaticResource FieldErrorTextStyle}"/>
                     <TextBlock Text="Место хранения" FontWeight="SemiBold"/>
-                    <ComboBox x:Name="cmbLocation" DisplayMemberPath="DisplayName"/>
+                    <ComboBox x:Name="cmbLocation" DisplayMemberPath="DisplayName" SelectionChanged="ValidateShipmentSelection"/>
+                    <TextBlock x:Name="errLocation" Style="{StaticResource FieldErrorTextStyle}"/>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -36,15 +39,18 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0" Margin="0,0,8,0">
                             <TextBlock Text="Количество" FontWeight="SemiBold"/>
-                            <TextBox x:Name="txtQuantity" Text="1" MaxLength="8"/>
+                            <TextBox x:Name="txtQuantity" Text="1" MaxLength="8" TextChanged="ValidateShipmentField"/>
+                            <TextBlock x:Name="errQuantity" Style="{StaticResource FieldErrorTextStyle}"/>
                         </StackPanel>
                         <StackPanel Grid.Column="1" Margin="8,0,0,0">
                             <TextBlock Text="Цена" FontWeight="SemiBold"/>
-                            <TextBox x:Name="txtPrice" MaxLength="12"/>
+                            <TextBox x:Name="txtPrice" MaxLength="12" TextChanged="ValidateShipmentField"/>
+                            <TextBlock x:Name="errPrice" Style="{StaticResource FieldErrorTextStyle}"/>
                         </StackPanel>
                     </Grid>
                     <TextBlock Text="Комментарий" FontWeight="SemiBold"/>
-                    <TextBox x:Name="txtComment" Height="74" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="300"/>
+                    <TextBox x:Name="txtComment" Height="74" TextWrapping="Wrap" AcceptsReturn="True" MaxLength="300" TextChanged="ValidateShipmentField"/>
+                    <TextBlock x:Name="errComment" Style="{StaticResource FieldErrorTextStyle}"/>
 
                     <Button x:Name="btnCreateShipment" Content="Создать отгрузку" Click="btnCreateShipment_Click" Style="{StaticResource PrimaryButtonStyle}" Margin="0,8,0,0"/>
                     <Button x:Name="btnRefresh" Content="Обновить списки" Click="btnRefresh_Click" Margin="0,4,0,0"/>

@@ -43,13 +43,32 @@ namespace WarehouseManagement.Pages
 
         private void btnBack_Click(object s, RoutedEventArgs e) { AppFrame.frmMain.GoBack(); }
 
+        private bool ValidateForm(out decimal price, out int min)
+        {
+            var ok = true;
+            string error;
+            price = 0;
+            min = 0;
+            error = InputValidationHelper.Required(txtName.Text, "Название товара"); InputValidationHelper.Mark(txtName, errName, error); ok &= error == null;
+            error = txtDescription.Text.Trim().Length > 200 ? "Описание слишком длинное: максимум 200 символов." : null; InputValidationHelper.Mark(txtDescription, errDescription, error); ok &= error == null;
+            ok &= InputValidationHelper.TryParsePrice(txtPrice.Text, out price, out error); InputValidationHelper.Mark(txtPrice, errPrice, error);
+            ok &= InputValidationHelper.TryParseQuantity(txtQuantity.Text, out min, out error); InputValidationHelper.Mark(txtQuantity, errQuantity, error);
+            ok &= InputValidationHelper.ValidateCombo(cmbCategory, errCategory, "Категория");
+            ok &= InputValidationHelper.ValidateCombo(cmbBrand, errBrand, "Поставщик");
+            ok &= InputValidationHelper.ValidateCombo(cmbStatus, errStatus, "Единица измерения");
+            return ok;
+        }
+
+        private void ValidateProductField(object sender, TextChangedEventArgs e) { if (!IsLoaded) return; decimal price; int min; ValidateForm(out price, out min); }
+        private void ValidateProductSelection(object sender, SelectionChangedEventArgs e) { if (!IsLoaded) return; decimal price; int min; ValidateForm(out price, out min); }
+
         private void btnSave_Click(object s, RoutedEventArgs e)
         {
             decimal price;
             int min;
-            if (!decimal.TryParse(txtPrice.Text, out price) || !int.TryParse(txtQuantity.Text, out min) || cmbCategory.SelectedItem == null || cmbBrand.SelectedItem == null || cmbStatus.SelectedItem == null || string.IsNullOrWhiteSpace(txtName.Text))
+            if (!ValidateForm(out price, out min))
             {
-                MessageBox.Show("Проверьте корректность полей");
+                MessageBox.Show("Исправьте подсвеченные поля товара.");
                 return;
             }
 
